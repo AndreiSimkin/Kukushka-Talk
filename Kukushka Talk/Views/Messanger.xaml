@@ -1,0 +1,162 @@
+﻿<Window x:Class="Kukushka_Talk.Views.Messanger"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kukushka_Talk.Views"
+        xmlns:vm="clr-namespace:Kukushka_Talk.ViewModels"
+        xmlns:cnv="clr-namespace:Kukushka_Talk.Converters"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="720" Width="1280"
+        Background="#18191D"
+        MinWidth="380"
+        MinHeight="500"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="CanResize"
+        AllowsTransparency="False"
+        Name="MainWindow"
+        WindowStartupLocation="Manual"
+        Left="0"
+        Top="0"
+        >
+    <Window.DataContext>
+        <vm:MessangerViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}" x:Key="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style TargetType="{x:Type Line}" x:Key="ButtonIcon">
+            <Setter Property="Line.Stroke" Value="#808080"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Button }}}" Value="True">
+                    <Setter Property="Stroke" Value="#dcdcdc"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+            CaptionHeight="35"
+            GlassFrameThickness="1,0,0,0"
+            CornerRadius="0"
+            ResizeBorderThickness="5"
+                       />
+    </WindowChrome.WindowChrome>
+    <Grid x:Name="Window">
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Setter Property="Margin" Value="0"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding WindowState, ElementName=MainWindow}" Value="2">
+                        <Setter Property="Margin" Value="8"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+        <Rectangle Height="22" Panel.ZIndex="2" Fill="#3a4047" VerticalAlignment="Top"/>
+        <Grid x:Name="Main" Margin="0,21,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="260" Width="0.5*"/>
+                <ColumnDefinition Width="3"/>
+                <ColumnDefinition>
+                    <ColumnDefinition.Style>
+                        <Style TargetType="ColumnDefinition">
+                            <Setter Property="MinWidth" Value="380"/>
+                            <Setter Property="MaxWidth" Value="65536"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ActualWidth, ElementName=MainWindow, Converter={cnv:LessThan 640}}" Value="True">
+                                    <Setter Property="MinWidth" Value="0"/>
+                                    <Setter Property="MaxWidth" Value="0"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ColumnDefinition.Style>
+                </ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.ColumnSpan="2" Grid.Column="0" FocusManager.FocusedElement="{Binding ElementName=Search}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="54"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Rectangle x:Name="UserPanelSurface" Grid.Row="0" Fill="#282e33" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                <Grid x:Name="Menu">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="54"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button  x:Name="MenuButton" Margin="7,7,7,7" Style="{StaticResource Button}" Cursor="Hand">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ElementName=OverlayMenu, Path=DataContext.OpenMenuCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <StackPanel Orientation="Vertical">
+                            <Line X1="0" X2="18" Y1="1" Y2="1" IsHitTestVisible="False" StrokeThickness="2" Style="{StaticResource ButtonIcon}"/>
+                            <Line X1="0" X2="18" Y1="4" Y2="4" IsHitTestVisible="False" StrokeThickness="2" Style="{StaticResource ButtonIcon}"/>
+                            <Line X1="0" X2="18" Y1="4" Y2="4" IsHitTestVisible="False" StrokeThickness="2" Style="{StaticResource ButtonIcon}"/>
+                        </StackPanel>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Grid>
+                                    <local:RippleEffect IsTabStop="False" x:Name="RippleEffect" Grid.ColumnSpan="2"/>
+                                    <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <Ellipse Fill="Transparent" StrokeThickness="10" Margin="-20" Width="60" Height="60" Stroke="{Binding Path=Fill, ElementName=UserPanelSurface}" IsHitTestVisible="False"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+
+                    </Button>
+                    <TextBox x:Name="Search" Grid.Column="1" Background="#3d444b" Foreground="WhiteSmoke" Margin="0, 11, 11, 11" BorderBrush="#3d444b" BorderThickness="0" Padding="8" FontFamily="Nirmala UI"  FontSize="13" >
+                        <TextBox.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="3"/>
+                            </Style>
+                        </TextBox.Resources>
+                    </TextBox>
+                    <TextBlock Grid.Column="1" IsHitTestVisible="False" Text="Поиск" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="6, 10, 10, 10" Padding="6" FontFamily="Nirmala UI"  FontSize="13">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Setter Property="Foreground" Value="#607e91"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=Search}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsFocused, ElementName=Search}" Value="True">
+                                        <Setter Property="Foreground" Value="#4d5c65"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+                <Grid x:Name="List" Grid.Row="1">
+                    <StackPanel FocusVisualStyle="{x:Null}">
+                        <local:ListItem></local:ListItem>
+                        <local:ListItem></local:ListItem>
+                        <local:ListItem Cursor="Hand"></local:ListItem>
+                        <local:RippleEffect/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="2" Name="Chat">
+
+                <Border Grid.Row="2"
+            Background="#2f343a"
+            BorderBrush="Gray"
+            Height="Auto"
+            CornerRadius="12"
+            Width="248"
+            HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <Label Content="Выберите, кому хотели бы написать" Grid.Row="1" HorizontalAlignment="Center" FontFamily="Nirmala UI" FontSize="13" Foreground="White" Height="Auto" Margin="0,-2,0,0"/>
+                </Border>
+            </Grid>
+            <GridSplitter Focusable="False" Grid.Column="1" Width="3" HorizontalAlignment="Stretch" Background="Transparent" Margin="-1,0,0,0" />
+        </Grid>
+        <local:NavigateMenu  x:Name="OverlayMenu"/>
+    </Grid>
+</Window>

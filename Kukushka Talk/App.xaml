@@ -1,0 +1,6 @@
+﻿<Application x:Class="Kukushka_Talk.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Kukushka_Talk"
+             StartupUri="Views/Messanger.xaml">
+</Application>

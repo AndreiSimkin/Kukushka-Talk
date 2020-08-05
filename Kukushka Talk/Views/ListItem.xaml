@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="Kukushka_Talk.Views.ListItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Kukushka_Talk.Views"
+             mc:Ignorable="d" 
+             Height="62" d:DesignWidth="400"
+             Name="Item" Cursor="Hand"
+             >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Ellipse Width="46" Height="46">
+            <Ellipse.Fill>
+                <ImageBrush ImageSource="C:\Users\Андрей\Desktop\User.png"/>
+            </Ellipse.Fill>
+        </Ellipse>
+        <Grid x:Name="Text" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock  Margin="2,10,0,0" Grid.Row="0" Foreground="#b7f5f5" x:Name="Label" Text="Label"/>
+            <TextBlock Margin="2,2,0,0" Grid.Row="1" Foreground="#b7f5f5" x:Name="Description" Text="Description"/>
+        </Grid>
+        <Rectangle Grid.ColumnSpan="2">
+            <Rectangle.Style>
+                <Style TargetType="{x:Type Rectangle}">
+                    <Setter Property="Fill" Value="Transparent"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=Item }" Value="True">
+                            <Setter Property="Fill" Value="#14D0E9FF"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Rectangle.Style>
+        </Rectangle>
+        <local:RippleEffect Grid.ColumnSpan="2"/>
+    </Grid>
+</UserControl>
