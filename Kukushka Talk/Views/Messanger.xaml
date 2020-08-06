@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kukushka_Talk.Views"
+        xmlns:el="clr-namespace:Kukushka_Talk.Views.Elements"
         xmlns:vm="clr-namespace:Kukushka_Talk.ViewModels"
         xmlns:cnv="clr-namespace:Kukushka_Talk.Converters"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
@@ -87,28 +88,13 @@
                         <ColumnDefinition Width="54"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button  x:Name="MenuButton" Margin="7,7,7,7" Style="{StaticResource Button}" Cursor="Hand">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding ElementName=OverlayMenu, Path=DataContext.OpenMenuCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                    <el:Button Command="{Binding ElementName=OverlayMenu, Path=DataContext.OpenMenuCommand}" x:Name="MenuButton" RoundMaskColor="{Binding Path=Fill, ElementName=UserPanelSurface}" Margin="7,7,7,7" Cursor="Hand">
                         <StackPanel Orientation="Vertical">
                             <Line X1="0" X2="18" Y1="1" Y2="1" IsHitTestVisible="False" StrokeThickness="2" Style="{StaticResource ButtonIcon}"/>
                             <Line X1="0" X2="18" Y1="4" Y2="4" IsHitTestVisible="False" StrokeThickness="2" Style="{StaticResource ButtonIcon}"/>
                             <Line X1="0" X2="18" Y1="4" Y2="4" IsHitTestVisible="False" StrokeThickness="2" Style="{StaticResource ButtonIcon}"/>
                         </StackPanel>
-                        <Button.Template>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Grid>
-                                    <local:RippleEffect IsTabStop="False" x:Name="RippleEffect" Grid.ColumnSpan="2"/>
-                                    <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                    <Ellipse Fill="Transparent" StrokeThickness="10" Margin="-20" Width="60" Height="60" Stroke="{Binding Path=Fill, ElementName=UserPanelSurface}" IsHitTestVisible="False"/>
-                                </Grid>
-                            </ControlTemplate>
-                        </Button.Template>
-
-                    </Button>
+                    </el:Button>
                     <TextBox x:Name="Search" Grid.Column="1" Background="#3d444b" Foreground="WhiteSmoke" Margin="0, 11, 11, 11" BorderBrush="#3d444b" BorderThickness="0" Padding="8" FontFamily="Nirmala UI"  FontSize="13" >
                         <TextBox.Resources>
                             <Style TargetType="{x:Type Border}">
@@ -135,10 +121,9 @@
                 </Grid>
                 <Grid x:Name="List" Grid.Row="1">
                     <StackPanel FocusVisualStyle="{x:Null}">
-                        <local:ListItem></local:ListItem>
-                        <local:ListItem></local:ListItem>
-                        <local:ListItem Cursor="Hand"></local:ListItem>
-                        <local:RippleEffect/>
+                        <el:ListItem></el:ListItem>
+                        <el:ListItem></el:ListItem>
+                        <el:ListItem Cursor="Hand"></el:ListItem>
                     </StackPanel>
                 </Grid>
             </Grid>

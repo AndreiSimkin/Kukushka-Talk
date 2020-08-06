@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Kukushka_Talk.Views
+namespace Kukushka_Talk.Views.Elements
 {
     /// <summary>
     /// Логика взаимодействия для RippleEffect.xaml
@@ -22,5 +22,16 @@ namespace Kukushka_Talk.Views
         {
             InitializeComponent();
         }
+
+        public static readonly DependencyProperty RoundMaskColorProperty =
+  DependencyProperty.Register(
+    "RoundMaskColor", typeof(Brush), typeof(RippleEffect), new PropertyMetadata(Brushes.Transparent));
+
+        public Brush RoundMaskColor
+        {
+            get { return (Brush)GetValue(RoundMaskColorProperty); }
+            set { SetValue(RoundMaskColorProperty, value); }
+        }
+
     }
 }

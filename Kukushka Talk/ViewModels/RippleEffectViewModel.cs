@@ -20,7 +20,7 @@ namespace Kukushka_Talk.ViewModels
         public Point EllipseEndPos => Model.EllipseEndPos;
         public double TargetWidth => Model.TargetWidth;
         public string CurrentElipse => Model.CurrentElipse;
-        public virtual string UserName { get; set; }
+        public Size RoundMaskSize => Model.RoundMaskSize;
 
         protected RippleEffectViewModel()
         {
@@ -30,6 +30,7 @@ namespace Kukushka_Talk.ViewModels
 
         public ICommand ActivateCommand => new DelegateCommand<object>((object args) => Model.Activate(args));
         public ICommand DeactivateCommand => new DelegateCommand<object>((object args) => Model.Decativate(args));
+        public ICommand InitializeCommand => new DelegateCommand<object>((object args) => Model.Initialize(args));
 
         public static RippleEffectViewModel Create()
         {
